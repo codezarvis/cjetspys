@@ -1,7 +1,6 @@
 class Test1 {
+ //changed by priyanka
 
-   public Test1() {
-	// Make it as Singleton
 
    }
 
