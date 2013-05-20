@@ -1,6 +1,6 @@
 
 
-	class Test {
+	class TestOne
 
 
 
