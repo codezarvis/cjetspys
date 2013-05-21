@@ -12,4 +12,6 @@ public interface BankEmployeeQueries {
 	public static final String DELETE = "DELETE  FROM BANKUSER WHERE USERNAME = ?";
 	public static final String AUTHENTICATE = "SELECT  * FROM BANKUSER WHERE USERNAME = ? AND PASSWORD = ?";
     public static final String FINDBY_USERNAME = "SELECT * FROM BANKUSER WHERE USERNAME = ?";
+    public static final String GETALL = "SELECT * FROM BANKUSER";
+    
 }
