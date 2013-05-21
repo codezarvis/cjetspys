@@ -17,4 +17,8 @@ public interface BankUserService {
 	void create(BankUser bankUser);
 	
 	List<BankUser> getAll();
+	
+	BankUser authenticate(String username,String password);
+	
+	BankUser findById(int id);
 }
