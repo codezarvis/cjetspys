@@ -19,5 +19,5 @@ public interface BankUserService extends Service{
 
 	BankUser authenticate(String username, String password) throws Exception;
 
-	BankUser findById(int id) throws Exception;
+	BankUser findById(String username) throws Exception;
 }
