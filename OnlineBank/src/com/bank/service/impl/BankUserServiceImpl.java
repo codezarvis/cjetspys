@@ -29,6 +29,9 @@ public class BankUserServiceImpl extends ServiceImpl implements BankUserService 
 		preparedStatement.setString(2, bankUser.getPassword());
 		preparedStatement.setString(3, bankUser.getUserRole());
 		preparedStatement.executeUpdate();
+		
+		preparedStatement.close();
+		closeConnection();
 
 	}
 
