@@ -13,7 +13,8 @@ public class BankEmployeeTest {
 		bankEmployee.setEmployeeId(101);
 		bankEmployee.setEmployeeName("priyanka");
 		bankEmployee.setSalary(300);
-		System.out.println(bankEmployee.getEmployeeId()+"\t"+bankEmployee.getEmployeeName()+"\t"+bankEmployee.getSalary()+"\n");
+		System.out.println(bankEmployee.getEmployeeId()+"\t"+bankEmployee.getEmployeeName()+"\t"
+		                  +bankEmployee.getSalary()+"\n");
 		
 
 	}
