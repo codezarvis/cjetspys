@@ -9,12 +9,15 @@ import com.bank.app.domain.BankUser;
 import com.bank.domain.BankUserImpl;
 import com.bank.service.BankUserService;
 import com.bank.utils.queries.BankEmployeeQueries;
+import com.mysql.jdbc.Statement;
 
 public class BankUserServiceImpl extends ServiceImpl implements BankUserService {
 
 	private static BankUserServiceImpl bankUserServiceImpl = new BankUserServiceImpl();
 
 	private PreparedStatement preparedStatement = null;
+	private Statement statement = null;
+	private ResultSet resultSet = null;
 
 	public static BankUserService getInstance() {
 		return bankUserServiceImpl;
@@ -24,8 +27,11 @@ public class BankUserServiceImpl extends ServiceImpl implements BankUserService 
 
 	}
 
-	/* (non-Javadoc)
-	 * @see com.bank.service.BankUserService#create(com.bank.app.domain.BankUser)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.bank.service.BankUserService#create(com.bank.app.domain.BankUser)
 	 */
 	public void create(BankUser bankUser) throws Exception {
 		preparedStatement = getConnection().prepareStatement(
@@ -34,13 +40,15 @@ public class BankUserServiceImpl extends ServiceImpl implements BankUserService 
 		preparedStatement.setString(2, bankUser.getPassword());
 		preparedStatement.setString(3, bankUser.getUserRole());
 		preparedStatement.executeUpdate();
-		
+
 		preparedStatement.close();
 		closeConnection();
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.bank.service.BankUserService#getAll()
 	 */
 	public List<BankUser> getAll() {
@@ -48,8 +56,11 @@ public class BankUserServiceImpl extends ServiceImpl implements BankUserService 
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.bank.service.BankUserService#authenticate(java.lang.String, java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.bank.service.BankUserService#authenticate(java.lang.String,
+	 * java.lang.String)
 	 */
 	@Override
 	public BankUser authenticate(String username, String password) throws  ClassNotFoundException,SQLException {
@@ -70,13 +81,33 @@ public class BankUserServiceImpl extends ServiceImpl implements BankUserService 
 		return bankUser;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.bank.service.BankUserService#findById(int)
 	 */
 	@Override
-	public BankUser findById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public BankUser findById(String username) throws SQLException,
+			ClassNotFoundException {
+
+		BankUser bankUser = null;
+
+		preparedStatement = getConnection().prepareStatement(
+				BankEmployeeQueries.FINDBY_USERNAME);
+		preparedStatement.setString(1, username);
+		resultSet = preparedStatement.executeQuery();
+
+		if (resultSet.next()) {
+			bankUser = new BankUserImpl();
+			bankUser.setUserName(resultSet.getString(1));
+			bankUser.setPassword(resultSet.getString(2));
+			bankUser.setUserRole(resultSet.getString(3));
+		}
+
+		resultSet.close();
+		preparedStatement.close();
+		closeConnection();
+		return bankUser;
 	}
 
 }
