@@ -1,7 +1,7 @@
 package com.bank.tests;
 
 import com.bank.app.domain.BankUser;
-import com.bank.domain.BankEmployee;
+import com.bank.domain.BankUserImpl;
 
 public class BankEmployeeTest {
 
@@ -10,7 +10,7 @@ public class BankEmployeeTest {
 	 */
 	public static void main(String[] args) {
 		 
-		BankUser bankUser = new BankEmployee();
+		BankUser bankUser = new BankUserImpl();
 		bankUser.setEmployeeId(101);
 		bankUser.setEmployeeName("priyanka");
 		bankUser.setSalary(300);
