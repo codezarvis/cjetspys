@@ -3,7 +3,6 @@ package com.bank.service.impl;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,6 +11,10 @@ import java.util.Properties;
 
 import com.bank.service.Service;
 
+/**
+ * @author Sudarsan
+ * Service Implementation for the DataStore "BankDb"
+ */
 public class ServiceImpl implements Service {
 
 	private Connection connection = null;
@@ -22,6 +25,9 @@ public class ServiceImpl implements Service {
 	private InputStream inputStream = null;
 	private Properties properties = null;
 
+	/**
+	 * Database Properties from the Properties File 
+	 */
 	public ServiceImpl() {
 
 		try {
@@ -40,6 +46,9 @@ public class ServiceImpl implements Service {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see com.bank.service.Service#getConnection()
+	 */
 	@Override
 	public Connection getConnection() throws ClassNotFoundException,
 			SQLException {
@@ -49,6 +58,9 @@ public class ServiceImpl implements Service {
 		return connection;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.bank.service.Service#closeConnection()
+	 */
 	@Override
 	public void closeConnection() throws SQLException {
 

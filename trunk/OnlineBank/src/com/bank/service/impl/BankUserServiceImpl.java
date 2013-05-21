@@ -1,7 +1,6 @@
 package com.bank.service.impl;
 
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.List;
 
 import com.bank.app.domain.BankUser;
@@ -22,6 +21,9 @@ public class BankUserServiceImpl extends ServiceImpl implements BankUserService 
 
 	}
 
+	/* (non-Javadoc)
+	 * @see com.bank.service.BankUserService#create(com.bank.app.domain.BankUser)
+	 */
 	public void create(BankUser bankUser) throws Exception {
 		preparedStatement = getConnection().prepareStatement(
 				BankEmployeeQueries.INSERT);
@@ -35,17 +37,26 @@ public class BankUserServiceImpl extends ServiceImpl implements BankUserService 
 
 	}
 
+	/* (non-Javadoc)
+	 * @see com.bank.service.BankUserService#getAll()
+	 */
 	public List<BankUser> getAll() {
 		// to do
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.bank.service.BankUserService#authenticate(java.lang.String, java.lang.String)
+	 */
 	@Override
 	public BankUser authenticate(String username, String password) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.bank.service.BankUserService#findById(int)
+	 */
 	@Override
 	public BankUser findById(int id) {
 		// TODO Auto-generated method stub
