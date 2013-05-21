@@ -22,15 +22,21 @@ public class ServiceImpl implements Service {
 	private InputStream inputStream = null;
 	private Properties properties = null;
 
-	public ServiceImpl() throws FileNotFoundException, IOException {
+	public ServiceImpl() {
 
-		inputStream = new FileInputStream(new File("database.properties"));
-		properties = new Properties();
-		properties.load(inputStream);
-		this.url = properties.getProperty("url");
-		this.driver = properties.getProperty("driver");
-		this.userName = properties.getProperty("userName");
-		this.password = properties.getProperty("password");
+		try {
+			inputStream = new FileInputStream(new File("database.properties"));
+			properties = new Properties();
+			properties.load(inputStream);
+			this.url = properties.getProperty("url");
+			this.driver = properties.getProperty("driver");
+			this.userName = properties.getProperty("userName");
+			this.password = properties.getProperty("password");
+		} catch (FileNotFoundException exception) {
+			exception.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 
