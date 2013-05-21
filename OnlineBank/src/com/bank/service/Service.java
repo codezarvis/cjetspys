@@ -3,6 +3,9 @@
  */
 package com.bank.service;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 /**
  * @author Sudarsan
  *
@@ -10,5 +13,9 @@ package com.bank.service;
 public interface Service {
 
 	
-	// TO Do
+	Connection getConnection() throws ClassNotFoundException, SQLException;
+	
+	void closeConnection() throws SQLException;
+	
+	
 }
