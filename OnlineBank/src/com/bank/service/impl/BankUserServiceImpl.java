@@ -3,13 +3,15 @@ package com.bank.service.impl;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.bank.app.domain.BankUser;
 import com.bank.domain.BankUserImpl;
 import com.bank.service.BankUserService;
 import com.bank.utils.queries.BankEmployeeQueries;
-import com.mysql.jdbc.Statement;
+
 
 public class BankUserServiceImpl extends ServiceImpl implements BankUserService {
 
@@ -52,8 +54,54 @@ public class BankUserServiceImpl extends ServiceImpl implements BankUserService 
 	 * @see com.bank.service.BankUserService#getAll()
 	 */
 	public List<BankUser> getAll() {
-		// to do
-		return null;
+		
+		List<BankUser> userList = new ArrayList<BankUser>();
+		Statement statement = null;
+		ResultSet resultSet = null;
+		BankUser bankUser = null;
+		 try {
+			statement = getConnection().createStatement();
+			resultSet = statement.executeQuery(BankEmployeeQueries.GETALL);
+			
+			while(resultSet.next()){
+				
+				String name = resultSet.getString(1);
+				String password = resultSet.getString(2);
+				String role = resultSet.getString(3);
+				
+				bankUser = new BankUserImpl();
+				bankUser.setUserName(name);
+				bankUser.setPassword(password);
+				bankUser.setUserRole(role);
+				
+				userList.add(bankUser);				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}finally{
+			
+			if(resultSet != null){
+			
+				try {
+					resultSet.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(statement!= null){
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			
+		}
+		
+		return userList;
 	}
 
 	/*
