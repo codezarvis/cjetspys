@@ -1,9 +1,12 @@
 package com.bank.service.impl;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 import com.bank.app.domain.BankUser;
+import com.bank.domain.BankUserImpl;
 import com.bank.service.BankUserService;
 import com.bank.utils.queries.BankEmployeeQueries;
 
@@ -49,9 +52,22 @@ public class BankUserServiceImpl extends ServiceImpl implements BankUserService 
 	 * @see com.bank.service.BankUserService#authenticate(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public BankUser authenticate(String username, String password) {
-		// TODO Auto-generated method stub
-		return null;
+	public BankUser authenticate(String username, String password) throws  ClassNotFoundException,SQLException {
+		
+		BankUser bankUser = null;
+		preparedStatement = getConnection().prepareStatement(BankEmployeeQueries.AUTHENTICATE);
+		
+		preparedStatement.setString(1,username);
+		preparedStatement.setString(2, password);
+		ResultSet resultSet = preparedStatement.executeQuery();
+		
+		if(resultSet.next()){
+		    bankUser = new BankUserImpl();
+			bankUser.setUserName(resultSet.getString(1));
+			bankUser.setPassword(resultSet.getString(2));
+			
+		}
+		return bankUser;
 	}
 
 	/* (non-Javadoc)
