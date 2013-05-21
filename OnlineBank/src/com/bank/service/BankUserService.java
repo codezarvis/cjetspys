@@ -11,7 +11,7 @@ import com.bank.app.domain.BankUser;
  * @author Sudarsan
  * 
  */
-public interface BankUserService {
+public interface BankUserService extends Service{
 
 	void create(BankUser bankUser) throws Exception;
 
