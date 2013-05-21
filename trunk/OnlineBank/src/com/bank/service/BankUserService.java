@@ -9,16 +9,15 @@ import com.bank.app.domain.BankUser;
 
 /**
  * @author Sudarsan
- *
+ * 
  */
 public interface BankUserService {
 
-	
-	void create(BankUser bankUser);
-	
-	List<BankUser> getAll();
-	
-	BankUser authenticate(String username,String password);
-	
-	BankUser findById(int id);
+	void create(BankUser bankUser) throws Exception;
+
+	List<BankUser> getAll() throws Exception;
+
+	BankUser authenticate(String username, String password) throws Exception;
+
+	BankUser findById(int id) throws Exception;
 }
