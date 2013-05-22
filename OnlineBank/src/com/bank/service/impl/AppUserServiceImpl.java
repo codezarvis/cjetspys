@@ -52,17 +52,17 @@ public class AppUserServiceImpl extends ServiceImpl implements AppUserService {
 	public AppUser authenticate(String userName, String password)
 			throws Exception {
 
-				
-		preparedStatement = getConnection().prepareStatement(AppUserQueries.AUTHENTICATE);
+		preparedStatement = getConnection().prepareStatement(
+				AppUserQueries.AUTHENTICATE);
 		preparedStatement.setString(1, userName);
 		preparedStatement.setString(2, password);
-		
+
 		ResultSet resultSet = preparedStatement.executeQuery();
 		AppUser appUser = null;
-		if(resultSet.next()){
-			
+		if (resultSet.next()) {
+
 			appUser = new AppUser();
-			
+
 			appUser.setId(resultSet.getInt(1));
 			appUser.setGuid(resultSet.getString(2));
 			appUser.setUserName(resultSet.getString(3));
@@ -75,12 +75,12 @@ public class AppUserServiceImpl extends ServiceImpl implements AppUserService {
 			appUser.setModifiedOn(resultSet.getDate(10));
 			appUser.setModifiedBy(resultSet.getInt(11));
 			appUser.setActive(resultSet.getInt(12));
-			
+
 		}
 		resultSet.close();
 		preparedStatement.close();
 		closeConnection();
-		
+
 		return appUser;
 
 	}
@@ -121,8 +121,24 @@ public class AppUserServiceImpl extends ServiceImpl implements AppUserService {
 	@Override
 	public int changePassword(String userName, String oldPassword,
 			String newPassword) throws Exception {
-		// TODO By Yash
-		return 0;
+
+		int flag = 0;
+		AppUser appUser = authenticate(userName, oldPassword);
+
+		if(appUser == null) {
+			flag = -1;
+			return flag;
+		}
+		
+		
+		System.out.println(appUser);
+		preparedStatement = getConnection().prepareStatement(
+				AppUserQueries.CHANGE_PASSWORD);
+
+		preparedStatement.setString(1, newPassword);
+		preparedStatement.setString(2, appUser.getUserName());
+
+		return preparedStatement.executeUpdate();
 	}
 
 	/*
@@ -135,7 +151,37 @@ public class AppUserServiceImpl extends ServiceImpl implements AppUserService {
 	public AppUser getPassword(String userName, String question, String answer)
 			throws Exception {
 		// TODO By Yash
-		return null;
+		preparedStatement = getConnection().prepareStatement(
+				AppUserQueries.GET_PASSWORD);
+		preparedStatement.setString(1, userName);
+		ResultSet resultSet = preparedStatement.executeQuery();
+		AppUser appUser = null;
+		if(resultSet.next()){
+			appUser = new AppUser();
+
+			
+			appUser.setId(resultSet.getInt(1));
+			appUser.setGuid(resultSet.getString(2));
+			appUser.setUserName(resultSet.getString(3));
+			appUser.setPassword(resultSet.getString(4));
+			appUser.setQuestion(resultSet.getString(5));
+			appUser.setAnswer(resultSet.getString(6));
+			appUser.setUserRole(resultSet.getString(7));
+			appUser.setCreatedOn(resultSet.getDate(8));
+			appUser.setCreatedBy(resultSet.getInt(9));
+			appUser.setModifiedOn(resultSet.getDate(10));
+			appUser.setModifiedBy(resultSet.getInt(11));
+			appUser.setActive(resultSet.getInt(12));
+			
+			
+			
+			@SuppressWarnings("unused")
+			String password = null;
+			if(appUser.getQuestion().equals(question) && appUser.getAnswer().equals(answer)){
+			password = appUser.getPassword();
+		}
+		}
+		return appUser;
 	}
 
 	/*
