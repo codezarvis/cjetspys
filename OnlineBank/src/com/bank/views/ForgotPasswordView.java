@@ -19,6 +19,7 @@ import org.apache.log4j.Logger;
 
 import com.bank.domain.sub.AppUser;
 import com.bank.utils.loggers.AppLogger;
+import com.bank.utils.service.ServiceUtils;
 
 @SuppressWarnings("serial")
 public class ForgotPasswordView extends JFrame {
@@ -88,9 +89,20 @@ public class ForgotPasswordView extends JFrame {
 
 				try {
 
-					  /* appUser = ServiceUtils.getAppUserService().getPassword(
-							userName, question, answer);*/
-					LOG.debug(userName+"t"+question+"\t"+answer+"\n");
+					  appUser = ServiceUtils.getAppUserService().getPassword(
+							userName, question, answer);
+					  if(appUser!=null){
+						  
+						  JOptionPane.showMessageDialog(null,"Your Passwors is :"+appUser.getPassword());  
+					 
+					  }else{
+						  
+						  JOptionPane.showMessageDialog(null,"Invalid Username or Password");
+						  textField.setText("");
+						  textField_1.setText("");
+					  }
+					   
+					/*LOG.debug(userName+"t"+question+"\t"+answer+"\n");*/
 					  
 				} catch (Exception e1) {
 
