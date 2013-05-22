@@ -45,6 +45,7 @@ public class AppUserServiceImpl extends ServiceImpl implements AppUserService {
 	public AppUser authenticate(String userame, String password)
 			throws Exception {
 
+		//TODO By Priyanka
 		return null;
 	}
 
@@ -84,7 +85,7 @@ public class AppUserServiceImpl extends ServiceImpl implements AppUserService {
 	@Override
 	public int changePassword(String userName, String oldPassword,
 			String newPassword) throws Exception {
-		// TODO Auto-generated method stub
+		// TODO By Yash
 		return 0;
 	}
 
@@ -97,7 +98,7 @@ public class AppUserServiceImpl extends ServiceImpl implements AppUserService {
 	@Override
 	public AppUser getPassword(String userName, String question, String answer)
 			throws Exception {
-		// TODO Auto-generated method stub
+		//TODO By Yash
 		return null;
 	}
 
@@ -108,7 +109,7 @@ public class AppUserServiceImpl extends ServiceImpl implements AppUserService {
 	 */
 	@Override
 	public int setStatus(String userName) throws Exception {
-		// TODO Auto-generated method stub
+		// TODO By Priyanka
 		return 0;
 	}
 
@@ -119,7 +120,7 @@ public class AppUserServiceImpl extends ServiceImpl implements AppUserService {
 	 */
 	@Override
 	public List<AppUser> getAll() throws Exception {
-		// TODO Auto-generated method stub
+		//TODO By Suneel
 		return null;
 	}
 
