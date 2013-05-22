@@ -108,7 +108,7 @@ public class AppUserServiceImpl extends ServiceImpl implements AppUserService {
 	 * @see com.bank.service.AppUserService#setStatus(java.lang.String)
 	 */
 	@Override
-	public int setStatus(String userName) throws Exception {
+	public int setStatus(String userName, int status) throws Exception {
 		// TODO By Priyanka
 		return 0;
 	}
