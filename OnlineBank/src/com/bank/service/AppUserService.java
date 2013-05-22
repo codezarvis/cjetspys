@@ -57,13 +57,14 @@ public interface AppUserService extends Service {
 
 	/**
 	 * @param userName
+	 * @param status
 	 * @return <code>int</code>
 	 * @throws Exception
 	 *             This Method is to change the <code>Status</code> of the
 	 *             AppUser, this used to activate and deactivate the
 	 *             <code>AppUser</code>.
 	 */
-	int setStatus(String userName) throws Exception;
+	int setStatus(String userName, int status) throws Exception;
 
 	/**
 	 * @return <code>List<AppUser></code>
