@@ -4,7 +4,11 @@
 package com.bank.service.impl;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import com.bank.domain.sub.AppUser;
 import com.bank.service.AppUserService;
@@ -17,19 +21,20 @@ import com.bank.utils.queries.AppUserQueries;
 public class AppUserServiceImpl extends ServiceImpl implements AppUserService {
 
 	private PreparedStatement preparedStatement = null;
-
+	private Statement statement = null;
+	Scanner scanner = new Scanner(System.in);
 	private static AppUserServiceImpl appUserServiceImpl = new AppUserServiceImpl();
 
 	/**
-	 * Creates a SingleTon Service for <code>AppUser.</code> 
+	 * Creates a SingleTon Service for <code>AppUser.</code>
 	 */
 	private AppUserServiceImpl() {
 
 	}
 
 	/**
-	 * @return <code>AppUserService</code>
-	 * Provides a Single Instance for <code>AppUserService</code>.
+	 * @return <code>AppUserService</code> Provides a Single Instance for
+	 *         <code>AppUserService</code>.
 	 */
 	public static AppUserService getInstance() {
 		return appUserServiceImpl;
@@ -42,11 +47,38 @@ public class AppUserServiceImpl extends ServiceImpl implements AppUserService {
 	 * java.lang.String)
 	 */
 	@Override
-	public AppUser authenticate(String userame, String password)
+	public AppUser authenticate(String userName, String password)
 			throws Exception {
-
-		//TODO By Priyanka
-		return null;
+				
+		preparedStatement = getConnection().prepareStatement(AppUserQueries.AUTHENTICATE);
+		preparedStatement.setString(1, userName);
+		preparedStatement.setString(2, password);
+		
+		ResultSet resultSet = preparedStatement.executeQuery();
+		AppUser appUser = null;
+		if(resultSet.next()){
+			
+			appUser = new AppUser();
+			
+			appUser.setId(resultSet.getInt(1));
+			appUser.setGuid(resultSet.getString(2));
+			appUser.setUserName(resultSet.getString(3));
+			appUser.setPassword(resultSet.getString(4));
+			appUser.setQuestion(resultSet.getString(5));
+			appUser.setAnswer(resultSet.getString(6));
+			appUser.setUserRole(resultSet.getString(7));
+			appUser.setCreatedOn(resultSet.getDate(8));
+			appUser.setCreatedBy(resultSet.getInt(9));
+			appUser.setModifiedOn(resultSet.getDate(10));
+			appUser.setModifiedBy(resultSet.getInt(11));
+			appUser.setActive(resultSet.getInt(12));
+			
+		}
+		resultSet.close();
+		preparedStatement.close();
+		closeConnection();
+		
+		return appUser;
 	}
 
 	/*
@@ -98,7 +130,7 @@ public class AppUserServiceImpl extends ServiceImpl implements AppUserService {
 	@Override
 	public AppUser getPassword(String userName, String question, String answer)
 			throws Exception {
-		//TODO By Yash
+		// TODO By Yash
 		return null;
 	}
 
@@ -120,8 +152,34 @@ public class AppUserServiceImpl extends ServiceImpl implements AppUserService {
 	 */
 	@Override
 	public List<AppUser> getAll() throws Exception {
-		//TODO By Suneel
-		return null;
+
+		List<AppUser> userList = new ArrayList<AppUser>();
+		statement = getConnection().createStatement();
+		ResultSet resultSet = statement.executeQuery(AppUserQueries.GET_ALL);
+
+		while (resultSet.next()) {
+
+			AppUser appUser = new AppUser();
+			appUser.setId(resultSet.getInt(1));
+			appUser.setGuid(resultSet.getString(2));
+			appUser.setUserName(resultSet.getString(3));
+			appUser.setPassword(resultSet.getString(4));
+			appUser.setQuestion(resultSet.getString(5));
+			appUser.setAnswer(resultSet.getString(6));
+			appUser.setUserRole(resultSet.getString(7));
+			appUser.setCreatedOn(resultSet.getDate(8));
+			appUser.setCreatedBy(resultSet.getInt(9));
+			appUser.setModifiedOn(resultSet.getDate(10));
+			appUser.setModifiedBy(resultSet.getInt(11));
+			appUser.setActive(resultSet.getInt(12));
+
+			userList.add(appUser);
+
+		}
+		resultSet.close();
+		statement.close();
+		closeConnection();
+		return userList;
 	}
 
 }
