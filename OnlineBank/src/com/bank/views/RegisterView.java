@@ -13,6 +13,7 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.DefaultComboBoxModel;
 
 public class RegisterView extends JFrame {
 
@@ -35,7 +36,7 @@ public class RegisterView extends JFrame {
 		
 		setTitle("User Registration");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 536, 460);
+		setBounds(100, 100, 714, 460);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -48,7 +49,7 @@ public class RegisterView extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "New User, Register Here", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel.setBounds(55, 55, 409, 347);
+		panel.setBounds(55, 55, 568, 347);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -96,7 +97,8 @@ public class RegisterView extends JFrame {
 		panel.add(passwordField_1);
 		
 		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(192, 196, 205, 22);
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"What was your childhood nickname?", "In what city did you meet your spouse/significant other?", "What is the name of your favorite childhood friend?", "What street did you live on in third grade?"}));
+		comboBox.setBounds(192, 196, 321, 22);
 		panel.add(comboBox);
 		
 		JButton btnSubmit = new JButton("Submit");
