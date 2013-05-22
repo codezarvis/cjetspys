@@ -4,9 +4,11 @@
 package com.bank.service.impl;
 
 import java.sql.PreparedStatement;
+
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -49,6 +51,7 @@ public class AppUserServiceImpl extends ServiceImpl implements AppUserService {
 	@Override
 	public AppUser authenticate(String userName, String password)
 			throws Exception {
+
 				
 		preparedStatement = getConnection().prepareStatement(AppUserQueries.AUTHENTICATE);
 		preparedStatement.setString(1, userName);
@@ -79,6 +82,7 @@ public class AppUserServiceImpl extends ServiceImpl implements AppUserService {
 		closeConnection();
 		
 		return appUser;
+
 	}
 
 	/*
@@ -141,8 +145,19 @@ public class AppUserServiceImpl extends ServiceImpl implements AppUserService {
 	 */
 	@Override
 	public int setStatus(String userName, int status) throws Exception {
-		// TODO By Priyanka
-		return 0;
+
+		preparedStatement = getConnection().prepareStatement(
+				AppUserQueries.CHANGE_STAUS);
+		preparedStatement.setInt(1, 1);
+		preparedStatement.setDate(2,
+				new java.sql.Date(new java.util.Date().getTime()));
+		preparedStatement.setInt(3, status);
+		preparedStatement.setString(4, userName);
+		int flag = preparedStatement.executeUpdate();
+		preparedStatement.close();
+		closeConnection();
+		return flag;
+
 	}
 
 	/*
@@ -180,6 +195,7 @@ public class AppUserServiceImpl extends ServiceImpl implements AppUserService {
 		statement.close();
 		closeConnection();
 		return userList;
+
 	}
 
 }
