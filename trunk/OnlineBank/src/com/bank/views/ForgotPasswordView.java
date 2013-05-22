@@ -49,22 +49,24 @@ public class ForgotPasswordView extends JFrame {
 		contentPane.add(lblForgotPassword);
 
 		textField = new JTextField();
-		textField.setBounds(156, 85, 192, 20);
+		textField.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		textField.setBounds(156, 85, 229, 20);
 		contentPane.add(textField);
 		textField.setColumns(10);
 
 		final JComboBox comboBox = new JComboBox();
-		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {
 				"What was your childhood nickname?",
 				" In what city did you meet your spouse/significant other? ",
 				"What is the name of your favorite childhood friend?",
 				" What street did you live on in third grade?" }));
-		comboBox.setBounds(156, 132, 192, 20);
+		comboBox.setBounds(156, 132, 229, 20);
 		contentPane.add(comboBox);
 
 		textField_1 = new JTextField();
-		textField_1.setBounds(156, 175, 192, 20);
+		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		textField_1.setBounds(156, 175, 229, 20);
 		contentPane.add(textField_1);
 		textField_1.setColumns(10);
 
@@ -101,6 +103,7 @@ public class ForgotPasswordView extends JFrame {
 		contentPane.add(btnSubmit);
 
 		JButton btnReset = new JButton("Reset");
+		btnReset.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textField.setText("");
@@ -108,7 +111,7 @@ public class ForgotPasswordView extends JFrame {
 				textField.requestFocus();
 			}
 		});
-		btnReset.setBounds(255, 228, 89, 23);
+		btnReset.setBounds(255, 228, 130, 23);
 		contentPane.add(btnReset);
 
 		JLabel lblUserName = new JLabel("User Name");
