@@ -3,8 +3,8 @@
  */
 package com.bank.utils.service;
 
-import com.bank.service.BankUserService;
-import com.bank.service.impl.BankUserServiceImpl;
+import com.bank.service.AppUserService;
+import com.bank.service.impl.AppUserServiceImpl;
 
 /**
  * @author Sudarsan
@@ -12,7 +12,11 @@ import com.bank.service.impl.BankUserServiceImpl;
  */
 public class ServiceUtils {
 
-	public static BankUserService getBankUserService() {
-		return BankUserServiceImpl.getInstance();
+	/**
+	 * @return <code>AppUserService<code>
+	 * Utility method for using AppUserService.
+	 */
+	public static AppUserService getAppUserService() {
+		return AppUserServiceImpl.getInstance();
 	}
 }
