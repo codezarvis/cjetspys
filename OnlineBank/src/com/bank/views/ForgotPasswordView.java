@@ -36,7 +36,7 @@ public class ForgotPasswordView extends JFrame {
 		setFont(new Font("Tahoma", Font.PLAIN, 13));
 		setTitle("Forgot Password");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 569, 354);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.LIGHT_GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -50,7 +50,7 @@ public class ForgotPasswordView extends JFrame {
 
 		textField = new JTextField();
 		textField.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textField.setBounds(156, 85, 229, 20);
+		textField.setBounds(156, 86, 338, 20);
 		contentPane.add(textField);
 		textField.setColumns(10);
 
@@ -61,12 +61,12 @@ public class ForgotPasswordView extends JFrame {
 				" In what city did you meet your spouse/significant other? ",
 				"What is the name of your favorite childhood friend?",
 				" What street did you live on in third grade?" }));
-		comboBox.setBounds(156, 132, 229, 20);
+		comboBox.setBounds(156, 133, 338, 20);
 		contentPane.add(comboBox);
 
 		textField_1 = new JTextField();
 		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textField_1.setBounds(156, 175, 229, 20);
+		textField_1.setBounds(156, 176, 338, 20);
 		contentPane.add(textField_1);
 		textField_1.setColumns(10);
 
