@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 
+@SuppressWarnings("serial")
 public class ChangePasswordView extends JFrame{
 	private JTextField textField;
 	private JPasswordField passwordField;
