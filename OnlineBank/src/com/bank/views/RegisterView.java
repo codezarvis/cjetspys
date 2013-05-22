@@ -2,7 +2,10 @@ package com.bank.views;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -13,7 +16,9 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.DefaultComboBoxModel;
+
+import com.bank.domain.sub.AppUser;
+import com.bank.utils.service.ServiceUtils;
 
 public class RegisterView extends JFrame {
 
@@ -96,12 +101,45 @@ public class RegisterView extends JFrame {
 		passwordField_1.setBounds(192, 141, 153, 22);
 		panel.add(passwordField_1);
 		
-		JComboBox comboBox = new JComboBox();
+		final JComboBox comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"What was your childhood nickname?", "In what city did you meet your spouse/significant other?", "What is the name of your favorite childhood friend?", "What street did you live on in third grade?"}));
 		comboBox.setBounds(192, 196, 321, 22);
 		panel.add(comboBox);
 		
-		JButton btnSubmit = new JButton("Submit");
+		final JButton btnSubmit = new JButton("Submit");
+		btnSubmit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				Object object = e.getSource();
+				
+				if(object.equals(btnSubmit)){
+				try {
+					String name = textField.getText();
+					String password1 = new String(passwordField.getPassword());
+					//String password2 = passwordField_1.getText();
+					String answer = textField_1.getText();
+					String question = comboBox.getSelectedItem().toString();
+					AppUser appUser = new AppUser();
+					appUser.setActive(1);
+					appUser.setUserName(name);
+					appUser.setPassword(password1);
+					appUser.setQuestion(question);
+					appUser.setAnswer(answer);
+					appUser.setCreatedOn(new java.util.Date());
+					appUser.setModifiedOn(new java.util.Date());					
+					appUser.setModifiedBy(1);
+					appUser.setCreatedBy(1);
+					appUser.setUserRole("user");					
+					ServiceUtils.getAppUserService().create(appUser);
+					
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				}
+				
+				}
+			
+		});
 		btnSubmit.setBounds(192, 309, 97, 25);
 		panel.add(btnSubmit);
 		
