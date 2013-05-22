@@ -22,7 +22,7 @@ public interface AppUserService extends Service {
 	 *             This Method is to Authenticate AppUser and returns AppUser,
 	 *             if given userName and password exisits.
 	 */
-	AppUser authenticate(String userame, String password) throws Exception;
+	AppUser authenticate(String userName, String password) throws Exception;
 
 	/**
 	 * @param appUser
