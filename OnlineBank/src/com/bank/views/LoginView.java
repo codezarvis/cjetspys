@@ -140,6 +140,7 @@ public class LoginView extends JFrame {
 		JButton btnForgotPassword = new JButton("Forgot Password ??");
 		btnForgotPassword.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				new ForgotPasswordView();
 			}
 		});
 		btnForgotPassword.setBounds(300, 405, 153, 25);
