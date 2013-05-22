@@ -1,19 +1,19 @@
 package com.bank.views;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.JPasswordField;
-import javax.swing.JButton;
-import javax.swing.border.TitledBorder;
 import java.awt.Color;
+import java.awt.Font;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 import javax.swing.UIManager;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class LoginView extends JFrame {
 
@@ -81,6 +81,23 @@ public class LoginView extends JFrame {
 		JButton btnReset = new JButton("ReSet");
 		btnReset.setBounds(265, 140, 97, 25);
 		panel.add(btnReset);
+		
+		JButton btnRegister = new JButton("Register");
+		btnRegister.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new RegisterView();
+			}
+		});
+		btnRegister.setBounds(191, 405, 97, 25);
+		contentPane.add(btnRegister);
+		
+		JButton btnForgotPassword = new JButton("Forgot Password ??");
+		btnForgotPassword.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnForgotPassword.setBounds(300, 405, 153, 25);
+		contentPane.add(btnForgotPassword);
 		setVisible(true);
 		setSize(500, 500);
 	}
