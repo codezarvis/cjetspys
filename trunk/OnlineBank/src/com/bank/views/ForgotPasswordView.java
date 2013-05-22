@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -18,8 +19,8 @@ import org.apache.log4j.Logger;
 
 import com.bank.domain.sub.AppUser;
 import com.bank.utils.loggers.AppLogger;
-import com.bank.utils.service.ServiceUtils;
 
+@SuppressWarnings("serial")
 public class ForgotPasswordView extends JFrame {
 
 	private JPanel contentPane;
@@ -74,6 +75,14 @@ public class ForgotPasswordView extends JFrame {
 				String userName = textField.getText();
 				String question = comboBox.getSelectedItem().toString();
 				String answer = textField_1.getText();
+				if(userName.length() == 0 || userName == null){
+					JOptionPane.showMessageDialog(null,"User name is required");
+					return;
+				}
+				if(answer.length() == 0 || answer == null){
+					JOptionPane.showMessageDialog(null,"Answer is required");
+					return;
+				}
 
 				try {
 
@@ -92,6 +101,13 @@ public class ForgotPasswordView extends JFrame {
 		contentPane.add(btnSubmit);
 
 		JButton btnReset = new JButton("Reset");
+		btnReset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textField.setText("");
+				textField_1.setText("");
+				textField.requestFocus();
+			}
+		});
 		btnReset.setBounds(255, 228, 89, 23);
 		contentPane.add(btnReset);
 
