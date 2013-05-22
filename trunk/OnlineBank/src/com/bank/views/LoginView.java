@@ -2,18 +2,22 @@ package com.bank.views;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+
+import com.bank.domain.sub.AppUser;
+import com.bank.utils.service.ServiceUtils;
 
 public class LoginView extends JFrame {
 
@@ -79,10 +83,48 @@ public class LoginView extends JFrame {
 		panel.add(passwordField);
 		
 		JButton btnLogin = new JButton("Login");
+		btnLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AppUser appUser = null;
+				String userName = textField.getText();
+				String password = new String(passwordField.getPassword());
+				if(userName.length()== 0 || userName == null ){
+					JOptionPane.showMessageDialog(null,"Username is required");
+					return ;
+				}
+				if(password.length() == 0 || password == null){
+					JOptionPane.showMessageDialog(null,"Password is required");
+					return;
+				}
+				try {
+					appUser = ServiceUtils.getAppUserService().authenticate(userName, password);
+					if(appUser!=null){
+						JOptionPane.showMessageDialog(null, "Login Successfull");
+					}else{
+						JOptionPane.showMessageDialog(null, "Invalid Username or Password");
+						textField.setText("");
+						passwordField.setText("");
+						textField.requestFocus();
+					}
+						
+				} catch (Exception e1) {
+					
+					e1.printStackTrace();
+				}
+				
+			}
+		});
 		btnLogin.setBounds(156, 140, 97, 25);
 		panel.add(btnLogin);
 		
 		JButton btnReset = new JButton("ReSet");
+		btnReset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textField.setText("");
+				passwordField.setText("");
+				textField.requestFocus();
+			}
+		});
 		btnReset.setBounds(265, 140, 97, 25);
 		panel.add(btnReset);
 		
