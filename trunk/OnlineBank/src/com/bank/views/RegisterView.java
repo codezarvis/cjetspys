@@ -140,10 +140,11 @@ public class RegisterView extends JFrame {
 						appUser.setCreatedBy(1);
 						appUser.setUserRole("user");
 
-						if (password1 == password2 && name != null
+						if (password1.equals(password2) && name != null
 								&& answer != null && password1 != null) {
 
 							ServiceUtils.getAppUserService().create(appUser);
+							JOptionPane.showMessageDialog(null, "User Created");
 						} else {
 
 							JOptionPane.showMessageDialog(null,
@@ -172,6 +173,7 @@ public class RegisterView extends JFrame {
 					textField_1.setText("");
 					passwordField.setText("");
 					passwordField_1.setText("");
+					textField.requestFocus();
 
 				}
 			}
