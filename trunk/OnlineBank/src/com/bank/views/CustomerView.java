@@ -12,6 +12,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
+
+import com.bank.utils.service.AccountNumberGenarator;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -150,6 +153,14 @@ public class CustomerView extends JFrame {
 		getContentPane().add(lblAccountNum);
 
 		JButton btnGenerate = new JButton("Generate");
+		btnGenerate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String accountNumber = AccountNumberGenarator
+						.genarateAccountNumber();
+				textField.setText(accountNumber);
+				textField.setEditable(false);
+			}
+		});
 		btnGenerate.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnGenerate.setBounds(381, 49, 89, 23);
 		getContentPane().add(btnGenerate);
