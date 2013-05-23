@@ -57,11 +57,7 @@ public class ForgotPasswordView extends JFrame {
 
 		final JComboBox comboBox = new JComboBox();
 		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {
-				"What was your childhood nickname?",
-				" In what city did you meet your spouse/significant other? ",
-				"What is the name of your favorite childhood friend?",
-				" What street did you live on in third grade?" }));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"What was your childhood nickname?", "In what city did you meet your spouse/significant other? ", "What is the name of your favorite childhood friend?", "What street did you live on in third grade?"}));
 		comboBox.setBounds(156, 133, 338, 20);
 		contentPane.add(comboBox);
 
@@ -78,32 +74,41 @@ public class ForgotPasswordView extends JFrame {
 				String userName = textField.getText();
 				String question = comboBox.getSelectedItem().toString();
 				String answer = textField_1.getText();
-				if(userName.length() == 0 || userName == null){
-					JOptionPane.showMessageDialog(null,"User name is required");
+				
+				LOG.debug("User Name : "+userName);
+				LOG.debug("Question : "+question);
+				LOG.debug("Answer : "+answer);
+				
+				
+				if (userName.length() == 0 || userName == null) {
+					JOptionPane
+							.showMessageDialog(null, "User name is required");
 					return;
 				}
-				if(answer.length() == 0 || answer == null){
-					JOptionPane.showMessageDialog(null,"Answer is required");
+				if (answer.length() == 0 || answer == null) {
+					JOptionPane.showMessageDialog(null, "Answer is required");
 					return;
 				}
 
 				try {
 
-					  appUser = ServiceUtils.getAppUserService().getPassword(
+					appUser = ServiceUtils.getAppUserService().getPassword(
 							userName, question, answer);
-					  if(appUser!=null){
-						  
-						  JOptionPane.showMessageDialog(null,"Your Passwors is :"+appUser.getPassword());  
-					 
-					  }else{
-						  
-						  JOptionPane.showMessageDialog(null,"Invalid Username or Password");
-						  textField.setText("");
-						  textField_1.setText("");
-					  }
-					   
-					/*LOG.debug(userName+"t"+question+"\t"+answer+"\n");*/
-					  
+					if (appUser != null) {
+
+						JOptionPane.showMessageDialog(null,
+								"Your Passwors is :" + appUser.getPassword());
+
+					} else {
+
+						JOptionPane.showMessageDialog(null,
+								"Invalid Username or Password");
+						textField.setText("");
+						textField_1.setText("");
+					}
+
+					/* LOG.debug(userName+"t"+question+"\t"+answer+"\n"); */
+
 				} catch (Exception e1) {
 
 					e1.printStackTrace();
