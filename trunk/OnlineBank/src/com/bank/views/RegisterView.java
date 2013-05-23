@@ -120,36 +120,49 @@ public class RegisterView extends JFrame {
 				Object object = e.getSource();
 
 				if (object.equals(btnSubmit)) {
+					
+					String name = textField.getText();
+					String password1 = new String(passwordField
+							.getPassword());
+					String password2 = new String(passwordField_1
+							.getPassword());
+					String answer = textField_1.getText();
+					String question = comboBox.getSelectedItem().toString();
+					AppUser appUser = new AppUser();
+					appUser.setActive(1);
+					appUser.setUserName(name);
+					appUser.setPassword(password1);
+					appUser.setQuestion(question);
+					appUser.setAnswer(answer);
+					appUser.setCreatedOn(new java.util.Date());
+					appUser.setModifiedOn(new java.util.Date());
+					appUser.setModifiedBy(1);
+					appUser.setCreatedBy(1);
+					appUser.setUserRole("user");
+					
+					if(name.length() == 0 || name == null){
+						
+						JOptionPane.showMessageDialog(null, "Name Required");
+						return;
+					}if(password1.length() == 0 || password1 == null){
+						
+						JOptionPane.showMessageDialog(null, "Password Required");
+						return;
+					}if(password1 != password2){
+						
+						JOptionPane.showMessageDialog(null, "Both Passwords must be equal");
+						return;
+					}if(answer.length() == 0 || answer == null){
+						
+						JOptionPane.showMessageDialog(null, "Answer Required");
+						return;
+					}
+					
 					try {
-						String name = textField.getText();
-						String password1 = new String(passwordField
-								.getPassword());
-						String password2 = new String(passwordField_1
-								.getPassword());
-						String answer = textField_1.getText();
-						String question = comboBox.getSelectedItem().toString();
-						AppUser appUser = new AppUser();
-						appUser.setActive(1);
-						appUser.setUserName(name);
-						appUser.setPassword(password1);
-						appUser.setQuestion(question);
-						appUser.setAnswer(answer);
-						appUser.setCreatedOn(new java.util.Date());
-						appUser.setModifiedOn(new java.util.Date());
-						appUser.setModifiedBy(1);
-						appUser.setCreatedBy(1);
-						appUser.setUserRole("user");
-
-						if (password1.equals(password2) && name != null
-								&& answer != null && password1 != null) {
-
+						
 							ServiceUtils.getAppUserService().create(appUser);
 							JOptionPane.showMessageDialog(null, "User Created");
-						} else {
-
-							JOptionPane.showMessageDialog(null,
-									"All Fields Required And Passwords must be same");
-						}
+						
 
 					} catch (Exception e1) {
 						e1.printStackTrace();
