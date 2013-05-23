@@ -67,6 +67,7 @@ public class CustomerSerivceImpl extends ServiceImpl implements CustomerService 
 
 		preparedStatement.executeUpdate();
 		preparedStatement.close();
+		closeConnection();
 
 	}
 
