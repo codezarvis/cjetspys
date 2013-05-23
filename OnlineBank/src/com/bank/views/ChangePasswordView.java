@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 
+import com.bank.domain.sub.AppUser;
 import com.bank.utils.service.ServiceUtils;
 
 @SuppressWarnings("serial")
@@ -21,7 +22,7 @@ public class ChangePasswordView extends JFrame {
 	private JPasswordField passwordField_1;
 	private JPasswordField passwordField_2;
 
-	public ChangePasswordView() {
+	public ChangePasswordView(AppUser appUser) {
 		setVisible(true);
 		setSize(600, 600);
 		getContentPane().setBackground(Color.GRAY);
@@ -54,7 +55,8 @@ public class ChangePasswordView extends JFrame {
 		lblNewPassword.setBounds(53, 189, 145, 14);
 		getContentPane().add(lblNewPassword);
 
-		textField = new JTextField();
+		textField = new JTextField(appUser.getUserName());
+		textField.setEditable(false);
 		textField.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		textField.setBounds(256, 89, 231, 23);
 		getContentPane().add(textField);
