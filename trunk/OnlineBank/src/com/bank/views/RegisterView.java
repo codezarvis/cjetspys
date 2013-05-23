@@ -142,15 +142,15 @@ public class RegisterView extends JFrame {
 					
 					if(name.length() == 0 || name == null){
 						
-						JOptionPane.showMessageDialog(null, "Name Required");
+						JOptionPane.showMessageDialog(null, "UserName Required");
 						return;
 					}if(password1.length() == 0 || password1 == null){
 						
 						JOptionPane.showMessageDialog(null, "Password Required");
 						return;
-					}if(password1 != password2){
+					}if(password2.length() == 0 || password2 == null){
 						
-						JOptionPane.showMessageDialog(null, "Both Passwords must be equal");
+						JOptionPane.showMessageDialog(null, "Retype Password Field Required");
 						return;
 					}if(answer.length() == 0 || answer == null){
 						
@@ -160,9 +160,17 @@ public class RegisterView extends JFrame {
 					
 					try {
 						
+						boolean flag = password1.equals(password2);
+						if(flag){
+							
 							ServiceUtils.getAppUserService().create(appUser);
 							JOptionPane.showMessageDialog(null, "User Created");
-						
+						}
+						else{
+							
+							JOptionPane.showMessageDialog(null, "Both Passwords must be same");
+							return;
+						}
 
 					} catch (Exception e1) {
 						e1.printStackTrace();
