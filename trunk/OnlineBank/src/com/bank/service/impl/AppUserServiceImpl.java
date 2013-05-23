@@ -125,12 +125,11 @@ public class AppUserServiceImpl extends ServiceImpl implements AppUserService {
 		int flag = 0;
 		AppUser appUser = authenticate(userName, oldPassword);
 
-		if(appUser == null) {
+		if (appUser == null) {
 			flag = -1;
 			return flag;
 		}
-		
-		
+
 		System.out.println(appUser);
 		preparedStatement = getConnection().prepareStatement(
 				AppUserQueries.CHANGE_PASSWORD);
@@ -153,13 +152,14 @@ public class AppUserServiceImpl extends ServiceImpl implements AppUserService {
 		// TODO By Yash
 		preparedStatement = getConnection().prepareStatement(
 				AppUserQueries.GET_PASSWORD);
-		preparedStatement.setString(1, userName);
+		preparedStatement.setString(1, question);
+		preparedStatement.setString(2, answer);
+		preparedStatement.setString(3, userName);
 		ResultSet resultSet = preparedStatement.executeQuery();
 		AppUser appUser = null;
-		if(resultSet.next()){
+		if (resultSet.next()) {
 			appUser = new AppUser();
 
-			
 			appUser.setId(resultSet.getInt(1));
 			appUser.setGuid(resultSet.getString(2));
 			appUser.setUserName(resultSet.getString(3));
@@ -172,14 +172,7 @@ public class AppUserServiceImpl extends ServiceImpl implements AppUserService {
 			appUser.setModifiedOn(resultSet.getDate(10));
 			appUser.setModifiedBy(resultSet.getInt(11));
 			appUser.setActive(resultSet.getInt(12));
-			
-			
-			
-			@SuppressWarnings("unused")
-			String password = null;
-			if(appUser.getQuestion().equals(question) && appUser.getAnswer().equals(answer)){
-			password = appUser.getPassword();
-		}
+
 		}
 		return appUser;
 	}
