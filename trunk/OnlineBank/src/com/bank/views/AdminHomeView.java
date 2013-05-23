@@ -1,25 +1,27 @@
 package com.bank.views;
 
-import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
-import javax.swing.JMenuBar;
 import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+
+import com.bank.domain.sub.AppUser;
 
 public class AdminHomeView {
 
 	private JFrame frmAdminHome;
-
+	private AppUser appUser = null;
 	
 
 	/**
 	 * Create the application.
 	 */
-	public AdminHomeView() {
+	public AdminHomeView(AppUser appUser) {
+		this.appUser = appUser;
 		initialize();
 	}
 
@@ -43,7 +45,7 @@ public class AdminHomeView {
 		JMenuItem mntmChangePassword = new JMenuItem("Change Password");
 		mntmChangePassword.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new ChangePasswordView();
+				new ChangePasswordView(appUser);
 			}
 		});
 		mnHome.add(mntmChangePassword);

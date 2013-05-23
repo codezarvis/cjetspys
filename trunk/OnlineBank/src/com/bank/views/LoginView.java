@@ -105,7 +105,7 @@ public class LoginView extends JFrame {
 
 						LOG.debug(appUser);
 							if(appUser.getUserRole().equalsIgnoreCase("admin")) {
-								new AdminHomeView();
+								new AdminHomeView(appUser);
 								dispose();
 							}
 						
