@@ -97,11 +97,12 @@ public class ChangePasswordView extends JFrame {
 										newPassword);
 						if (flag1 == 1) {
 							JOptionPane.showMessageDialog(null,
-									"Updated Successfull");
+									"Password changed  Successfully");
 							textField.setText("");
 							passwordField.setText("");
 							passwordField_1.setText("");
 							passwordField_2.setText("");
+							
 						} else {
 							JOptionPane.showMessageDialog(null,
 									"Invalid details");
@@ -125,7 +126,7 @@ public class ChangePasswordView extends JFrame {
 			}
 		});
 		btnSubmit.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		btnSubmit.setBounds(185, 295, 89, 23);
+		btnSubmit.setBounds(258, 295, 89, 23);
 		getContentPane().add(btnSubmit);
 
 		JButton btnReset = new JButton("Reset");
@@ -139,7 +140,7 @@ public class ChangePasswordView extends JFrame {
 			}
 		});
 		btnReset.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		btnReset.setBounds(300, 295, 89, 23);
+		btnReset.setBounds(374, 295, 89, 23);
 		getContentPane().add(btnReset);
 
 		passwordField = new JPasswordField();
