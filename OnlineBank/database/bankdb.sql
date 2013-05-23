@@ -17,3 +17,23 @@ CREATE TABLE /*!32312 IF NOT EXISTS*/ `appuser` (
 
 
 
+CREATE TABLE `TBL_CUTOMER` (
+
+   `id` INT(10) NOT NULL AUTO_INCREMENT, 
+   `guid` VARCHAR (255) NOT NULL, 
+   `accountNumber` VARCHAR (255) default NULL, 
+   `firstName` VARCHAR (255) default NULL, 
+   `lastName` VARCHAR (255) default NULL, 
+   `gender` VARCHAR (255) default NULL, 
+   `dateOfBirth` VARCHAR (255) default NULL, 
+   `email` VARCHAR (255) default NULL, 
+   `mobile` VARCHAR (255) default NULL, 
+   `userPic` MEDIUMBLOB default NULL, 
+   `signature` MEDIUMBLOB default NULL, 
+   `createdon` DATE default NULL, 
+   `createdby` INT(10) default NULL, 
+   `modifiedon` DATE default NULL, 
+   `modifiedby` INT(10) , 
+   `active` INT(10) default NULL, 
+   PRIMARY KEY(`id`)
+ ) ENGINE = InnoDB AUTO_INCREMENT=1;
