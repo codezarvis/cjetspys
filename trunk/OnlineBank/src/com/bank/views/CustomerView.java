@@ -1,6 +1,5 @@
 package com.bank.views;
 
-import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.BorderFactory;
@@ -18,6 +17,7 @@ import com.bank.utils.service.AccountNumberGenarator;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+@SuppressWarnings("serial")
 public class CustomerView extends JFrame {
 	private JTextField textField;
 	private JTextField textField_1;
