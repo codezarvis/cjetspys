@@ -17,6 +17,8 @@ public class ChangePasswordView extends JFrame{
 	private JPasswordField passwordField_1;
 	private JPasswordField passwordField_2;
 	public ChangePasswordView() {
+		setVisible(true);
+		setSize(600, 600);
 		getContentPane().setBackground(Color.GRAY);
 		setTitle("Change Password");
 		getContentPane().setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -87,11 +89,5 @@ public class ChangePasswordView extends JFrame{
 		getContentPane().add(passwordField_2);
 	}
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
+	
 }
