@@ -3,10 +3,12 @@
  */
 package com.bank.service.impl;
 
+import java.sql.PreparedStatement;
 import java.util.List;
 
 import com.bank.domain.sub.Customer;
 import com.bank.service.CustomerService;
+import com.bank.utils.queries.CustomerQueries;
 
 /**
  * @author Sudarsan
@@ -14,10 +16,12 @@ import com.bank.service.CustomerService;
  */
 public class CustomerSerivceImpl extends ServiceImpl implements CustomerService {
 
+	private PreparedStatement preparedStatement = null;
+
 	private static CustomerSerivceImpl customerSerivceImpl = new CustomerSerivceImpl();
 
 	/**
-	 *  Creates a SingleTon Service for <code>Customer.</code>
+	 * Creates a SingleTon Service for <code>Customer.</code>
 	 */
 	private CustomerSerivceImpl() {
 
@@ -39,7 +43,30 @@ public class CustomerSerivceImpl extends ServiceImpl implements CustomerService 
 	 */
 	@Override
 	public void create(Customer customer) throws Exception {
-		// TODO Auto-generated method stub
+
+		preparedStatement = getConnection().prepareStatement(
+				CustomerQueries.INSERT);
+
+		preparedStatement.setString(1, customer.getGuid());
+		preparedStatement.setString(2, customer.getAccountNumber());
+		preparedStatement.setString(3, customer.getFirstName());
+		preparedStatement.setString(4, customer.getLastName());
+		preparedStatement.setString(5, customer.getGender());
+		preparedStatement.setString(6, customer.getDateOfBirth());
+		preparedStatement.setString(7, customer.getEmail());
+		preparedStatement.setString(8, customer.getMobile());
+		preparedStatement.setBlob(9, customer.getUserPic());
+		preparedStatement.setBlob(10, customer.getSignature());
+		preparedStatement.setDate(11, new java.sql.Date(customer.getCreatedOn()
+				.getTime()));
+		preparedStatement.setInt(12, customer.getCreatedBy());
+		preparedStatement.setDate(13, new java.sql.Date(customer
+				.getModifiedOn().getTime()));
+		preparedStatement.setInt(14, customer.getModifiedBy());
+		preparedStatement.setInt(15, customer.getActive());
+
+		preparedStatement.executeUpdate();
+		preparedStatement.close();
 
 	}
 
