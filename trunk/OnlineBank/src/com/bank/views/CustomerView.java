@@ -1,21 +1,27 @@
 package com.bank.views;
 
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 
+import com.bank.domain.sub.Customer;
 import com.bank.utils.service.AccountNumberGenarator;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import com.bank.utils.service.ServiceUtils;
 
 @SuppressWarnings("serial")
 public class CustomerView extends JFrame {
@@ -30,9 +36,10 @@ public class CustomerView extends JFrame {
 	private JTextField textField_8;
 
 	public CustomerView() {
+		
 		setVisible(true);
 		setSize(600, 600);
-		setTitle("Customer Form");
+		setTitle("Customer Data Entry");
 		// getContentPane().setBackground(Color.LIGHT_GRAY);
 		getContentPane().setFont(new Font("Tahoma", Font.PLAIN, 13));
 		getContentPane().setLayout(null);
@@ -166,8 +173,13 @@ public class CustomerView extends JFrame {
 		getContentPane().add(btnGenerate);
 
 		JButton btnSubmit = new JButton("Submit");
+		
 		btnSubmit.addActionListener(new ActionListener() {
+			
+			Customer customer = null;
+
 			public void actionPerformed(ActionEvent e) {
+				
 				String accountNum = textField.getText();
 				String userName = textField_1.getText();
 				String firstName = textField_2.getText();
@@ -176,8 +188,24 @@ public class CustomerView extends JFrame {
 				String dateOfBirth = textField_4.getText();
 				String email = textField_5.getText();
 				String mobile = textField_6.getText();
-				String userPic = textField_7.getText();
-				String signature = textField_8.getText();
+				/*String userPic = textField_7.getText();
+				String signature = textField_8.getText();*/
+				 customer = new Customer();
+				customer.setId(1);
+				customer.setAccountNumber(accountNum);
+				customer.setFirstName(firstName);
+				customer.setLastName(lastName);
+				customer.setGender(gender);
+				customer.setDateOfBirth(dateOfBirth);
+				customer.setEmail(email);
+				customer.setMobile(mobile);
+
+				customer.setCreatedOn(new java.util.Date());
+				customer.setCreatedBy(1);
+				customer.setModifiedOn(new java.util.Date());
+				customer.setModifiedBy(1);
+				customer.setActive(1);
+
 				if (accountNum.length() == 0 || accountNum == null) {
 					JOptionPane.showMessageDialog(null,
 							"account number is required");
@@ -213,7 +241,7 @@ public class CustomerView extends JFrame {
 							"Mobile Number is required");
 					return;
 				}
-				if (userPic.length() == 0 || userPic == null) {
+				/*if (userPic.length() == 0 || userPic == null) {
 					JOptionPane.showMessageDialog(null,
 							"User Picture is required");
 					return;
@@ -222,6 +250,24 @@ public class CustomerView extends JFrame {
 					JOptionPane
 							.showMessageDialog(null, "Signature is required");
 					return;
+				}*/
+				try {
+					ServiceUtils.getCustomerService().create(customer);
+					JOptionPane.showMessageDialog(null,
+							"Customer Record inserted");
+					textField.setText("");
+					textField_1.setText("");
+					textField_2.setText("");
+					textField_3.setText("");
+					textField_4.setText("");
+					textField_5.setText("");
+					textField_6.setText("");
+					textField_7.setText("");
+					textField_8.setText("");
+					textField.requestFocus();
+				} catch (Exception e1) {
+
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -230,11 +276,49 @@ public class CustomerView extends JFrame {
 		getContentPane().add(btnSubmit);
 
 		JButton btnBrowse = new JButton("Browse");
+		btnBrowse.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				JFileChooser chooser = new JFileChooser();
+				chooser.showOpenDialog(chooser);
+				File file = chooser.getSelectedFile();
+				InputStream inputStream;
+				try {
+					inputStream = new FileInputStream(file);
+				    Customer customer = new Customer();
+					customer.setUserPic(inputStream);
+
+				} catch (FileNotFoundException e2) {
+
+					e2.printStackTrace();
+				}
+
+			}
+		});
 		btnBrowse.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnBrowse.setBounds(381, 333, 89, 23);
 		getContentPane().add(btnBrowse);
 
 		JButton btnBrowse_1 = new JButton("Browse");
+		btnBrowse_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				Customer customer = new Customer();
+				JFileChooser chooser = new JFileChooser();
+				chooser.showOpenDialog(chooser);
+				File file = chooser.getSelectedFile();
+				InputStream inputStream;
+				try {
+					inputStream = new FileInputStream(file);
+					customer.setSignature(inputStream);
+
+				} catch (FileNotFoundException e2) {
+
+					e2.printStackTrace();
+				}
+
+			}
+		});
 		btnBrowse_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnBrowse_1.setBounds(381, 369, 89, 23);
 		getContentPane().add(btnBrowse_1);
