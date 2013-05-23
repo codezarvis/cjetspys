@@ -98,6 +98,8 @@ public class ForgotPasswordView extends JFrame {
 
 						JOptionPane.showMessageDialog(null,
 								"Your Passwors is :" + appUser.getPassword());
+						textField.setText("");
+						textField_1.setText("");
 
 					} else {
 
