@@ -240,7 +240,7 @@ public class CustomerView extends JFrame {
 		lblSig.setBounds(381, 232, 89, 84);
 		getContentPane().add(lblSig);
 
-		JLabel lblCustomerPicture = new JLabel("Customer Picture");
+		JLabel lblCustomerPicture = new JLabel("User Picture");
 		lblCustomerPicture.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblCustomerPicture.setBounds(27, 338, 120, 14);
 		getContentPane().add(lblCustomerPicture);
