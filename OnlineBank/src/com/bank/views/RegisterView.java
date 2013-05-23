@@ -139,22 +139,26 @@ public class RegisterView extends JFrame {
 					appUser.setModifiedBy(1);
 					appUser.setCreatedBy(1);
 					appUser.setUserRole("user");
-					
+
 					if(name.length() == 0 || name == null){
 						
 						JOptionPane.showMessageDialog(null, "UserName Required");
+						textField.requestFocus();
 						return;
 					}if(password1.length() == 0 || password1 == null){
 						
 						JOptionPane.showMessageDialog(null, "Password Required");
+						passwordField.requestFocus();
 						return;
 					}if(password2.length() == 0 || password2 == null){
 						
 						JOptionPane.showMessageDialog(null, "Retype Password Field Required");
+						passwordField_1.requestFocus();
 						return;
 					}if(answer.length() == 0 || answer == null){
 						
 						JOptionPane.showMessageDialog(null, "Answer Required");
+						textField_1.requestFocus();
 						return;
 					}
 					
@@ -165,10 +169,16 @@ public class RegisterView extends JFrame {
 							
 							ServiceUtils.getAppUserService().create(appUser);
 							JOptionPane.showMessageDialog(null, "User Created");
+							textField.setText("");
+							textField_1.setText("");
+							passwordField.setText("");
+							passwordField_1.setText("");
+							textField.requestFocus();
 						}
 						else{
 							
 							JOptionPane.showMessageDialog(null, "Both Passwords must be same");
+							passwordField.requestFocus();
 							return;
 						}
 
