@@ -16,7 +16,10 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import org.apache.log4j.Logger;
+
 import com.bank.domain.sub.AppUser;
+import com.bank.utils.loggers.AppLogger;
 import com.bank.utils.service.ServiceUtils;
 
 public class LoginView extends JFrame {
@@ -28,7 +31,7 @@ public class LoginView extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 	private JPasswordField passwordField;
-
+	private Logger LOG = AppLogger.getLogger();
 	/**
 	 * Create the frame.
 	 */
@@ -99,7 +102,13 @@ public class LoginView extends JFrame {
 				try {
 					appUser = ServiceUtils.getAppUserService().authenticate(userName, password);
 					if(appUser!=null){
-						JOptionPane.showMessageDialog(null, "Login Successfull");
+
+						LOG.debug(appUser);
+							if(appUser.getUserRole().equalsIgnoreCase("admin")) {
+								new AdminHomeView();
+								dispose();
+							}
+						
 					}else{
 						JOptionPane.showMessageDialog(null, "Invalid Username or Password");
 						textField.setText("");
