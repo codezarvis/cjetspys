@@ -126,8 +126,36 @@ public class CustomerSerivceImpl extends ServiceImpl implements CustomerService 
 	 */
 	@Override
 	public Customer findByAccountNumber(String accountNumber) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+
+		preparedStatement = getConnection().prepareStatement(CustomerQueries.FIND_BY_ACCOUNTNUMBER);
+		
+		preparedStatement.setString(1, accountNumber);
+		ResultSet resultSet = preparedStatement.executeQuery();
+		Customer customer = null;
+		if(resultSet.next()){
+			customer = new Customer(); 
+			
+			customer.setId(resultSet.getInt(1));
+			customer.setGuid(resultSet.getString(2));
+			customer.setAccountNumber(resultSet.getString(3));
+			customer.setFirstName(resultSet.getString(4));
+			customer.setLastName(resultSet.getString(5));
+			customer.setGender(resultSet.getString(6));
+			customer.setDateOfBirth(resultSet.getString(7));
+			customer.setEmail(resultSet.getString(8));
+			customer.setMobile(resultSet.getString(9));
+			customer.setUserPic(resultSet.getBinaryStream(10));
+			customer.setSignature(resultSet.getBinaryStream(11));
+			customer.setCreatedOn(resultSet.getDate(12));
+			customer.setCreatedBy(resultSet.getInt(13));
+			customer.setModifiedOn(resultSet.getDate(14));
+			customer.setModifiedBy(resultSet.getInt(15));
+			customer.setActive(resultSet.getInt(16));
+		}
+		
+		preparedStatement.close();
+		closeConnection();
+		return customer;
 	}
 
 }
