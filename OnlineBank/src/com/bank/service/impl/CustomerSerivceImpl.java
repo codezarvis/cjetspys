@@ -9,8 +9,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.bank.domain.sub.Customer;
 import com.bank.service.CustomerService;
+import com.bank.utils.loggers.AppLogger;
 import com.bank.utils.queries.CustomerQueries;
 
 /**
@@ -21,7 +24,7 @@ public class CustomerSerivceImpl extends ServiceImpl implements CustomerService 
 
 	private PreparedStatement preparedStatement = null;
 	private Statement statement = null;
-	
+	private static Logger LOG = AppLogger.getLogger();
 	private static CustomerSerivceImpl customerSerivceImpl = new CustomerSerivceImpl();
 
 	/**
@@ -48,6 +51,9 @@ public class CustomerSerivceImpl extends ServiceImpl implements CustomerService 
 	@Override
 	public void create(Customer customer) throws Exception {
 
+		
+		LOG.debug("PIC SIZE : "+customer.getUserPic().available());
+		LOG.debug("SIG SIZE : "+customer.getSignature().available());
 		preparedStatement = getConnection().prepareStatement(
 				CustomerQueries.INSERT);
 
