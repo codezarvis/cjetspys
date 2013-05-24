@@ -1,15 +1,21 @@
 package com.bank.views;
 
+import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -19,12 +25,19 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 
+import org.apache.log4j.Logger;
+
 import com.bank.domain.sub.Customer;
+import com.bank.utils.loggers.AppLogger;
 import com.bank.utils.service.AccountNumberGenarator;
 import com.bank.utils.service.ServiceUtils;
 
-@SuppressWarnings("serial")
+
 public class CustomerView extends JFrame {
+	/**
+	 * SET SESSION max_allowed_packet=16777216;
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
@@ -34,12 +47,16 @@ public class CustomerView extends JFrame {
 	private JTextField textField_6;
 	private JTextField textField_7;
 	private JTextField textField_8;
-
+	private InputStream inputStreamPic = null;
+	private InputStream inputStreamSignature = null;
+	private static Logger LOG = AppLogger.getLogger();
 	public CustomerView() {
+		getContentPane().setBackground(Color.LIGHT_GRAY);
 		
 		setVisible(true);
 		setSize(600, 600);
 		setTitle("Customer Data Entry");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// getContentPane().setBackground(Color.LIGHT_GRAY);
 		getContentPane().setFont(new Font("Tahoma", Font.PLAIN, 13));
 		getContentPane().setLayout(null);
@@ -190,21 +207,7 @@ public class CustomerView extends JFrame {
 				String mobile = textField_6.getText();
 				/*String userPic = textField_7.getText();
 				String signature = textField_8.getText();*/
-				 customer = new Customer();
-				customer.setId(1);
-				customer.setAccountNumber(accountNum);
-				customer.setFirstName(firstName);
-				customer.setLastName(lastName);
-				customer.setGender(gender);
-				customer.setDateOfBirth(dateOfBirth);
-				customer.setEmail(email);
-				customer.setMobile(mobile);
-
-				customer.setCreatedOn(new java.util.Date());
-				customer.setCreatedBy(1);
-				customer.setModifiedOn(new java.util.Date());
-				customer.setModifiedBy(1);
-				customer.setActive(1);
+				 
 
 				if (accountNum.length() == 0 || accountNum == null) {
 					JOptionPane.showMessageDialog(null,
@@ -252,9 +255,32 @@ public class CustomerView extends JFrame {
 					return;
 				}*/
 				try {
+					
+					customer = new Customer();
+					customer.setAccountNumber(accountNum);
+					customer.setFirstName(firstName);
+					customer.setLastName(lastName);
+					customer.setGender(gender);
+					customer.setDateOfBirth(dateOfBirth);
+					customer.setEmail(email);
+					customer.setMobile(mobile);
+					inputStreamPic = new FileInputStream(new File(textField_7.getText()));
+					inputStreamSignature = new FileInputStream(new File(textField_8.getText()));
+					LOG.debug("AT : PIC SIZE "+inputStreamPic.available());
+					LOG.debug("AT : SIG SIZE "+inputStreamSignature.available());
+					customer.setUserPic(inputStreamPic);
+					customer.setSignature(inputStreamSignature);
+					customer.setCreatedOn(new java.util.Date());
+					customer.setCreatedBy(1);
+					customer.setModifiedOn(new java.util.Date());
+					customer.setModifiedBy(1);
+					customer.setActive(1);
+					
 					ServiceUtils.getCustomerService().create(customer);
 					JOptionPane.showMessageDialog(null,
 							"Customer Record inserted");
+					
+					
 					textField.setText("");
 					textField_1.setText("");
 					textField_2.setText("");
@@ -266,7 +292,6 @@ public class CustomerView extends JFrame {
 					textField_8.setText("");
 					textField.requestFocus();
 				} catch (Exception e1) {
-
 					e1.printStackTrace();
 				}
 			}
@@ -274,7 +299,12 @@ public class CustomerView extends JFrame {
 		btnSubmit.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnSubmit.setBounds(164, 411, 89, 23);
 		getContentPane().add(btnSubmit);
-
+		final JLabel lblPicUser = new JLabel();
+		lblPicUser.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null,
+				null));
+		lblPicUser.setBounds(381, 123, 89, 88);
+		getContentPane().add(lblPicUser);
+		
 		JButton btnBrowse = new JButton("Browse");
 		btnBrowse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -282,15 +312,32 @@ public class CustomerView extends JFrame {
 				JFileChooser chooser = new JFileChooser();
 				chooser.showOpenDialog(chooser);
 				File file = chooser.getSelectedFile();
-				InputStream inputStream;
+				textField_7.setText(file.getAbsolutePath());
+				textField_7.setEditable(false);
+				InputStream inputStream = null;
 				try {
-					inputStream = new FileInputStream(file);
-				    Customer customer = new Customer();
-					customer.setUserPic(inputStream);
-
+					inputStream = new FileInputStream(file);			   
+					
+					BufferedImage imgPic;
+					try {
+						imgPic = ImageIO.read(inputStream);
+						Image img = imgPic.getScaledInstance(lblPicUser.getWidth(), lblPicUser.getHeight(), BufferedImage.SCALE_SMOOTH);
+						lblPicUser.setIcon(new ImageIcon(img));
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+					
 				} catch (FileNotFoundException e2) {
 
 					e2.printStackTrace();
+				}finally {
+//					if(inputStream!=null) {
+//						try {
+//							inputStream.close();
+//						} catch (IOException e1) {
+//							e1.printStackTrace();
+//						}
+//					}
 				}
 
 			}
@@ -299,22 +346,47 @@ public class CustomerView extends JFrame {
 		btnBrowse.setBounds(381, 333, 89, 23);
 		getContentPane().add(btnBrowse);
 
+		
+		final JLabel lblSig = new JLabel();
+
+		lblSig.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+		lblSig.setBounds(381, 239, 89, 84);
+		getContentPane().add(lblSig);
+		
 		JButton btnBrowse_1 = new JButton("Browse");
 		btnBrowse_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				Customer customer = new Customer();
+				
 				JFileChooser chooser = new JFileChooser();
 				chooser.showOpenDialog(chooser);
 				File file = chooser.getSelectedFile();
-				InputStream inputStream;
+				textField_8.setText(file.getAbsolutePath());
+				textField_8.setEditable(false);
+				InputStream inputStream = null;;
 				try {
 					inputStream = new FileInputStream(file);
-					customer.setSignature(inputStream);
-
+					
+					BufferedImage imgPic;
+					try {
+						imgPic = ImageIO.read(inputStream);
+						Image img = imgPic.getScaledInstance(lblSig.getWidth(), lblSig.getHeight(), BufferedImage.SCALE_SMOOTH);
+						lblSig.setIcon(new ImageIcon(img));
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+					
 				} catch (FileNotFoundException e2) {
 
 					e2.printStackTrace();
+				}finally {
+//					if(inputStream!=null) {
+//						try {
+//							inputStream.close();
+//						} catch (IOException e1) {
+//							e1.printStackTrace();
+//						}
+//					}
 				}
 
 			}
@@ -323,17 +395,9 @@ public class CustomerView extends JFrame {
 		btnBrowse_1.setBounds(381, 369, 89, 23);
 		getContentPane().add(btnBrowse_1);
 
-		JLabel lbl = new JLabel();
-		lbl.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null,
-				null));
-		lbl.setBounds(381, 123, 89, 88);
-		getContentPane().add(lbl);
+		
 
-		JLabel lblSig = new JLabel();
-
-		lblSig.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-		lblSig.setBounds(381, 232, 89, 84);
-		getContentPane().add(lblSig);
+		
 
 		JLabel lblCustomerPicture = new JLabel("User Picture");
 		lblCustomerPicture.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -342,12 +406,12 @@ public class CustomerView extends JFrame {
 
 		JLabel lblSignature_1 = new JLabel("Signature");
 		lblSignature_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblSignature_1.setBounds(397, 219, 89, 14);
+		lblSignature_1.setBounds(391, 224, 62, 14);
 		getContentPane().add(lblSignature_1);
 
 		JLabel lblUserPicture = new JLabel("User Picture");
 		lblUserPicture.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblUserPicture.setBounds(397, 110, 89, 14);
+		lblUserPicture.setBounds(381, 102, 89, 14);
 		getContentPane().add(lblUserPicture);
 
 		JButton btnReset = new JButton("Reset");
