@@ -36,6 +36,7 @@ import com.bank.utils.service.ServiceUtils;
 public class CustomerView extends JFrame {
 	/**
 	 * SET SESSION max_allowed_packet=16777216;
+	 * SET GLOBAL max_allowed_packet=16777216;
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
