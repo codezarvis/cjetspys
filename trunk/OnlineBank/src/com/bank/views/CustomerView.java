@@ -32,7 +32,6 @@ import com.bank.utils.loggers.AppLogger;
 import com.bank.utils.service.AccountNumberGenarator;
 import com.bank.utils.service.ServiceUtils;
 
-
 public class CustomerView extends JFrame {
 	/**
 	 * SET SESSION max_allowed_packet=16777216; SET GLOBAL
@@ -51,9 +50,10 @@ public class CustomerView extends JFrame {
 	private InputStream inputStreamPic = null;
 	private InputStream inputStreamSignature = null;
 	private static Logger LOG = AppLogger.getLogger();
+
 	public CustomerView() {
 		getContentPane().setBackground(Color.LIGHT_GRAY);
-		
+
 		setVisible(true);
 		setSize(600, 600);
 		setTitle("Customer Form");
@@ -193,13 +193,13 @@ public class CustomerView extends JFrame {
 		getContentPane().add(btnGenerate);
 
 		JButton btnSubmit = new JButton("Submit");
-		
+
 		btnSubmit.addActionListener(new ActionListener() {
-			
+
 			Customer customer = null;
 
 			public void actionPerformed(ActionEvent e) {
-				
+
 				String accountNum = textField.getText();
 				String userName = textField_1.getText();
 				String firstName = textField_2.getText();
@@ -210,7 +210,6 @@ public class CustomerView extends JFrame {
 				String mobile = textField_6.getText();
 				String userPic = textField_7.getText();
 				String signature = textField_8.getText();
-				 
 
 				if (accountNum.length() == 0 || accountNum == null) {
 					JOptionPane.showMessageDialog(null,
@@ -258,7 +257,7 @@ public class CustomerView extends JFrame {
 					return;
 				}
 				try {
-					
+
 					customer = new Customer();
 					customer.setAccountNumber(accountNum);
 					customer.setFirstName(firstName);
@@ -267,10 +266,13 @@ public class CustomerView extends JFrame {
 					customer.setDateOfBirth(dateOfBirth);
 					customer.setEmail(email);
 					customer.setMobile(mobile);
-					inputStreamPic = new FileInputStream(new File(textField_7.getText()));
-					inputStreamSignature = new FileInputStream(new File(textField_8.getText()));
-					LOG.debug("AT : PIC SIZE "+inputStreamPic.available());
-					LOG.debug("AT : SIG SIZE "+inputStreamSignature.available());
+					inputStreamPic = new FileInputStream(new File(textField_7
+							.getText()));
+					inputStreamSignature = new FileInputStream(new File(
+							textField_8.getText()));
+					LOG.debug("AT : PIC SIZE " + inputStreamPic.available());
+					LOG.debug("AT : SIG SIZE "
+							+ inputStreamSignature.available());
 					customer.setUserPic(inputStreamPic);
 					customer.setSignature(inputStreamSignature);
 					customer.setCreatedOn(new java.util.Date());
@@ -278,12 +280,11 @@ public class CustomerView extends JFrame {
 					customer.setModifiedOn(new java.util.Date());
 					customer.setModifiedBy(1);
 					customer.setActive(1);
-					
+
 					ServiceUtils.getCustomerService().create(customer);
 					JOptionPane.showMessageDialog(null,
 							"Customer Record inserted");
-					
-					
+
 					textField.setText("");
 					textField_1.setText("");
 					textField_2.setText("");
@@ -303,15 +304,15 @@ public class CustomerView extends JFrame {
 		btnSubmit.setBounds(164, 411, 89, 23);
 		getContentPane().add(btnSubmit);
 		final JLabel lblPicUser = new JLabel();
-		lblPicUser.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null,
-				null));
+		lblPicUser.setBorder(new BevelBorder(BevelBorder.RAISED, null, null,
+				null, null));
 		lblPicUser.setBounds(381, 123, 89, 88);
 		getContentPane().add(lblPicUser);
-		
+
 		JButton btnBrowse = new JButton("Browse");
 		btnBrowse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				JFileChooser chooser = new JFileChooser();
 				chooser.showOpenDialog(chooser);
 				File file = chooser.getSelectedFile();
@@ -319,28 +320,30 @@ public class CustomerView extends JFrame {
 				textField_7.setEditable(false);
 				InputStream inputStream = null;
 				try {
-					inputStream = new FileInputStream(file);			   
-					
+					inputStream = new FileInputStream(file);
+
 					BufferedImage imgPic;
 					try {
 						imgPic = ImageIO.read(inputStream);
-						Image img = imgPic.getScaledInstance(lblPicUser.getWidth(), lblPicUser.getHeight(), BufferedImage.SCALE_SMOOTH);
+						Image img = imgPic.getScaledInstance(
+								lblPicUser.getWidth(), lblPicUser.getHeight(),
+								BufferedImage.SCALE_SMOOTH);
 						lblPicUser.setIcon(new ImageIcon(img));
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
-					
+
 				} catch (FileNotFoundException e2) {
 
 					e2.printStackTrace();
-				}finally {
-//					if(inputStream!=null) {
-//						try {
-//							inputStream.close();
-//						} catch (IOException e1) {
-//							e1.printStackTrace();
-//						}
-//					}
+				} finally {
+					// if(inputStream!=null) {
+					// try {
+					// inputStream.close();
+					// } catch (IOException e1) {
+					// e1.printStackTrace();
+					// }
+					// }
 				}
 
 			}
@@ -349,47 +352,47 @@ public class CustomerView extends JFrame {
 		btnBrowse.setBounds(381, 333, 89, 23);
 		getContentPane().add(btnBrowse);
 
-		
 		final JLabel lblSig = new JLabel();
 
 		lblSig.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 		lblSig.setBounds(381, 239, 89, 84);
 		getContentPane().add(lblSig);
-		
+
 		JButton btnBrowse_1 = new JButton("Browse");
 		btnBrowse_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				
 				JFileChooser chooser = new JFileChooser();
 				chooser.showOpenDialog(chooser);
 				File file = chooser.getSelectedFile();
 				textField_8.setText(file.getAbsolutePath());
 				textField_8.setEditable(false);
-				InputStream inputStream = null;;
+				InputStream inputStream = null;
+				;
 				try {
 					inputStream = new FileInputStream(file);
-					
+
 					BufferedImage imgPic;
 					try {
 						imgPic = ImageIO.read(inputStream);
-						Image img = imgPic.getScaledInstance(lblSig.getWidth(), lblSig.getHeight(), BufferedImage.SCALE_SMOOTH);
+						Image img = imgPic.getScaledInstance(lblSig.getWidth(),
+								lblSig.getHeight(), BufferedImage.SCALE_SMOOTH);
 						lblSig.setIcon(new ImageIcon(img));
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
-					
+
 				} catch (FileNotFoundException e2) {
 
 					e2.printStackTrace();
-				}finally {
-//					if(inputStream!=null) {
-//						try {
-//							inputStream.close();
-//						} catch (IOException e1) {
-//							e1.printStackTrace();
-//						}
-//					}
+				} finally {
+					// if(inputStream!=null) {
+					// try {
+					// inputStream.close();
+					// } catch (IOException e1) {
+					// e1.printStackTrace();
+					// }
+					// }
 				}
 
 			}
@@ -397,10 +400,6 @@ public class CustomerView extends JFrame {
 		btnBrowse_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnBrowse_1.setBounds(381, 369, 89, 23);
 		getContentPane().add(btnBrowse_1);
-
-		
-
-		
 
 		JLabel lblCustomerPicture = new JLabel("User Picture");
 		lblCustomerPicture.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -441,7 +440,7 @@ public class CustomerView extends JFrame {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-        
+
 		new CustomerView();
 
 	}
