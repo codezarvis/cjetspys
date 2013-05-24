@@ -35,8 +35,8 @@ import com.bank.utils.service.ServiceUtils;
 
 public class CustomerView extends JFrame {
 	/**
-	 * SET SESSION max_allowed_packet=16777216;
-	 * SET GLOBAL max_allowed_packet=16777216;
+	 * SET SESSION max_allowed_packet=16777216; SET GLOBAL
+	 * max_allowed_packet=16777216;
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
@@ -56,7 +56,7 @@ public class CustomerView extends JFrame {
 		
 		setVisible(true);
 		setSize(600, 600);
-		setTitle("Customer Data Entry");
+		setTitle("Customer Form");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// getContentPane().setBackground(Color.LIGHT_GRAY);
 		getContentPane().setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -101,9 +101,9 @@ public class CustomerView extends JFrame {
 		lblSignature.setBounds(27, 371, 109, 14);
 		getContentPane().add(lblSignature);
 
-		JLabel lblCustomerForm = new JLabel("Customer Form");
+		JLabel lblCustomerForm = new JLabel("Customer Data Entry");
 		lblCustomerForm.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblCustomerForm.setBounds(210, 11, 171, 28);
+		lblCustomerForm.setBounds(164, 0, 238, 39);
 		getContentPane().add(lblCustomerForm);
 
 		textField_1 = new JTextField();
@@ -148,12 +148,14 @@ public class CustomerView extends JFrame {
 		textField_7.setBounds(164, 334, 191, 20);
 		getContentPane().add(textField_7);
 		textField_7.setColumns(10);
+		textField_7.setEditable(false);
 
 		textField_8 = new JTextField();
 		textField_8.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		textField_8.setBounds(164, 370, 191, 20);
 		getContentPane().add(textField_8);
 		textField_8.setColumns(10);
+		textField_8.setEditable(false);
 
 		textField_4 = new JTextField();
 		textField_4.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -206,8 +208,8 @@ public class CustomerView extends JFrame {
 				String dateOfBirth = textField_4.getText();
 				String email = textField_5.getText();
 				String mobile = textField_6.getText();
-				/*String userPic = textField_7.getText();
-				String signature = textField_8.getText();*/
+				String userPic = textField_7.getText();
+				String signature = textField_8.getText();
 				 
 
 				if (accountNum.length() == 0 || accountNum == null) {
@@ -245,7 +247,7 @@ public class CustomerView extends JFrame {
 							"Mobile Number is required");
 					return;
 				}
-				/*if (userPic.length() == 0 || userPic == null) {
+				if (userPic.length() == 0 || userPic == null) {
 					JOptionPane.showMessageDialog(null,
 							"User Picture is required");
 					return;
@@ -254,7 +256,7 @@ public class CustomerView extends JFrame {
 					JOptionPane
 							.showMessageDialog(null, "Signature is required");
 					return;
-				}*/
+				}
 				try {
 					
 					customer = new Customer();
@@ -439,7 +441,7 @@ public class CustomerView extends JFrame {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-
+        
 		new CustomerView();
 
 	}
